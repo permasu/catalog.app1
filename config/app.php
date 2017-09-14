@@ -172,7 +172,10 @@ return [
          * SleepingOwl Service Provider
          */
         SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,
-
+        /*
+         * Dadata.ru Service Provide
+         */
+        Fomvasss\Dadata\DadataServiceProvider::class,
         /*
          * Application Service Providers...
          */

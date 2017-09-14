@@ -26,6 +26,9 @@ return [
         'title' => 'Dashboard',
         'icon'  => 'fa fa-dashboard',
         'url'   => route('admin.dashboard'),
+        'pages' => [
+            (new Page(\App\Models\Company::class)),
+        ]
     ],
 
     [
