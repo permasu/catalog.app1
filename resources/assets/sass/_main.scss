@@ -1,0 +1,13 @@
+@import "variables";
+
+.autocomplete-list {
+  &>ul {
+    padding: 0;
+  }
+
+  .list-group-item {
+    .autocomplete-anchor-label {
+      display: block;
+    }
+  }
+}

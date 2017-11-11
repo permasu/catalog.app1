@@ -16,6 +16,9 @@ $brand-success: #2ab27b;
 $brand-warning: #cbb956;
 $brand-danger: #bf5329;
 
+// Сolor
+$color-dark-blue: #222d32;
+
 // Typography
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 $font-family-sans-serif: "Raleway", sans-serif;
@@ -36,3 +39,7 @@ $input-color-placeholder: lighten($text-color, 30%);
 
 // Panels
 $panel-default-heading-bg: #fff;
+
+// Sidebar
+$sidebar-default-width: 230px;
+$sidebar-default-color: $color-dark-blue;

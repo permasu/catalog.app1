@@ -11,7 +11,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
      * @var array
      */
     protected $sections = [
-        //\App\User::class => 'App\Http\Sections\Users',
+        \App\Models\Company::class => 'App\Admin\Company',
     ];
 
     /**
@@ -21,8 +21,11 @@ class AdminSectionsServiceProvider extends ServiceProvider
      */
     public function boot(\SleepingOwl\Admin\Admin $admin)
     {
-    	//
-
         parent::boot($admin);
+
+        \AdminFormElement::add('autocomplete', \App\Misc\FormElements\AutocompleteText::class);
+
     }
+
+
 }
