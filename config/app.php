@@ -177,6 +177,10 @@ return [
          */
         Fomvasss\Dadata\DadataServiceProvider::class,
         /*
+        * Goutte Service Provide
+        */
+        App\Providers\GoutteServiceProvider::class,
+        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
@@ -184,6 +188,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
 
     ],
 
@@ -235,6 +240,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Goutte' => App\Facades\Goutte::class,
     ],
 
 ];

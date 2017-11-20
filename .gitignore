@@ -14,3 +14,5 @@ yarn-error.log
 .phpstorm.meta.php
 composer.lock
 composer.phar
+
+public/packages/

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
-use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
     public function view( $id ) {
-        return var_dump($id);
+        $company = Company::whereId($id)->get()->first();
+        return view('page.company', ['company' => $company]);
     }
 }

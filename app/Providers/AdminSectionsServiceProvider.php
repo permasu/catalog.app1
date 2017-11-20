@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Company;
+use App\Models\Setting;
 use SleepingOwl\Admin\Providers\AdminSectionsServiceProvider as ServiceProvider;
 
 class AdminSectionsServiceProvider extends ServiceProvider
@@ -11,7 +13,8 @@ class AdminSectionsServiceProvider extends ServiceProvider
      * @var array
      */
     protected $sections = [
-        \App\Models\Company::class => 'App\Admin\Company',
+        Company::class => 'App\Admin\Company',
+        Setting::class => 'App\Admin\Setting'
     ];
 
     /**
@@ -23,9 +26,6 @@ class AdminSectionsServiceProvider extends ServiceProvider
     {
         parent::boot($admin);
 
-        \AdminFormElement::add('autocomplete', \App\Misc\FormElements\AutocompleteText::class);
-
     }
-
 
 }

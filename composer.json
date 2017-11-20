@@ -7,10 +7,12 @@
     "require": {
         "php": ">=5.6.4",
         "doctrine/dbal": "^2.6",
+        "fabpot/goutte": "^3.2",
         "fomvasss/laravel-dadata": "^1.0",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "laravelrus/sleepingowl": "4.*@dev"
+        "laravelrus/sleepingowl": "4.*@dev",
+        "symfony/dom-crawler": "^3.3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^2.4",

@@ -18,10 +18,8 @@ Route::get('/', function () {
 });
 
 
-Route::get('search', function() {
-    $company = new Company;
-    return $company->searchAddress('Добрянка Энгельса 5-15', 10);
-});
+Route::get('test/{string}', 'ParserController@getList');
+Route::get('test/id/{id}', 'ParserController@getCompany')->where('id', '\d+');
 
 
 //Маршрут для ajax запросов
