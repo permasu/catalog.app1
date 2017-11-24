@@ -6,7 +6,7 @@
  */
 
 require('./bootstrap');
-require('./components/autocomplete');
+//require('vue2-autocomplete-js');
 
 window.Vue = require('vue');
 
@@ -16,11 +16,17 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
-//Vue.component('autocomplete', require('vue2-autocomplete-js'));
 Vue.component('search', require('./components/autocomplete.vue'));
 
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+        value : {},
+    },
+    methods: {
+        setValue: function ( param ) {
+            this.$set( this.value , param.name, param.id)
+        }
+    }
 });

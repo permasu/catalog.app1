@@ -1,22 +1,24 @@
 <template>
-
     <autocomplete
-            url="/ajax/company/search/"
-            anchor="full_name"
-            label="address"
-            placeholder="Название организации"
-            name="search"
-            :on-select="getData"
+
+            anchor       = "name"
+            label        = "description"
+            :initValue   = "value"
+            :url         = "url"
+            :name        = "name"
+            :placeholder = "placeholder"
+            :min         = "4"
+            :debounce    = "300"
             :classes="{
                 wrapper: 'form-wrapper',
                 input: 'form-control',
                 list: 'list-group',
                 item: 'list-group-item' }"
-            :onSelect="openLink">
+            :onSelect = myAction
+            :onShouldRenderChild = myRender
+    >
     </autocomplete>
-
 </template>
-
 
 <script>
 
@@ -24,17 +26,50 @@
 
     export default {
 
-        components: { Autocomplete },
+        props: ['url', 'onSelect', 'placeholder', 'name', 'target', 'render', 'value'],
+
+        components: {Autocomplete},
 
         methods: {
-            getData(obj){
-                console.log(obj);
+            myAction(value) {
+                switch (this.onSelect) {
+                    case 'openLink':
+                        location.href = value.link;
+                        break;
+                    case 'select':
+                        this.$emit('update-value', {
+                            'id': value.id,
+                            'name': this.target
+                        });
+                        break;
+                }
             },
 
-            openLink(value) {
-                location.href = value.link;
+            myRender(value) {
+                var html;
+
+                switch (this.render) {
+                    case 'address':
+
+                        var string = value.query
+                                    .split(/[^а-яa-z]+/gi)
+                                    .join("\|");
+
+                        var pattern = new RegExp('('+ string +')', 'gui');
+
+                        string = value.name.replace( pattern, '<b>$1</b>');
+
+                        html = `<span class="autocomplete-anchor-text">${ string }</span>`;
+                        break;
+                    default:
+                        html = `<span class="autocomplete-anchor-text">${ value.name }</span>
+                               <span class="autocomplete-anchor-label">${ value.description }</span>`;
+                        break;
+                }
+
+                return html;
             }
         }
-    };
+    }
 
 </script>

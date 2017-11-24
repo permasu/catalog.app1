@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Fomvasss\Dadata\Facades\DadataSuggest;
 
 /**
  * App\Company
@@ -53,11 +52,6 @@ class Company extends Model
 
     public function categories () {
         return $this->belongsToMany('App\Models\Category');
-    }
-
-    public function searchAddress( $address, $count = 10 ) {
-       $address = DadataSuggest::suggest("address", ["query"=>$address, "count"=>$count]);
-       return $address['suggestions'];
     }
 
 }

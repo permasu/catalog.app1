@@ -3,61 +3,98 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
-use Illuminate\Http\Request;
+use App\Models\Opf;
+use Fomvasss\Dadata\Facades\DadataSuggest;
 
 class AjaxController extends Controller
 {
     /**
      * Поиск адресса по строке
      *
-     * @param string $string строка поиска
-     * @param integer $limit (defaults: 10) кол-во возвращаемых строк
-     *
      * @return array
      */
-    public function get_company_address_search($string = '', $limit = 10)
+    public function searchAddress()
     {
-        $request = $string !=='' ? $string : \Request::get('q');
+        $string = \Request::get('q', '');
+        $limit = \Request::get('limit', 10);
 
-        $company = new Company();
-        return $company->searchAddress($request, $limit);
-    }
+        $addresses = DadataSuggest::suggest("address", ["query"=>$string, "count"=>$limit]);
 
-    /**
-     * Поиск адресса по строке
-     *
-     * @param integer $limit кол-во возвращаемых строк
-     *
-     * @return array
-     */
-    public function post_company_address_search( $limit = 0 )
-    {
-        $string = \Request::get('q');
+        $data = array();
 
-        $company = new Company();
-        return $company->searchAddress($string, $limit);
+        preg_match_all('/(\w{3,})/u', $string, $words);
+
+        foreach ($addresses['suggestions'] as $address) {
+
+/*            foreach ($words[1] as $word) {
+                $address['value'] = preg_replace( '/('.$word.')/ui', '<b>$1</b>', $address['value']);
+            }*/
+
+            $data[] = array(
+                'name' => $address['value'],
+                'unrestricted'  => $address['unrestricted_value'],
+                'postal_code'   => $address['data']['postal_code'],
+                'query'         => $string
+            );
+        }
+
+        return $data;
+
     }
 
     /**
      * Поиск компании по названию
      *
-     * @param string  $string (default: '')
-     * @param integer $limit (default: 10)
-     *
      * @return array
      * */
 
-    public function get_company_search( $string = '', $limit = 10) {
-        $request = $string !=='' ? $string : \Request::get('q');
+    public function searchCompany() {
+
+        $string = \Request::get('q', '');
+        $limit = \Request::get('limit', 10);
 
         $company = new Company();
 
-        $result = $company->where('full_name', 'like', "%$request%")->get()->toArray();
+        $result = $company
+            ->where('full_name', 'like', "%$string%")
+            ->limit($limit)
+            ->get();
 
-        foreach ( $result as &$item ) {
-            $item['link'] = \URL::route('company_view', $item['id']);
+        $data = array();
+
+        foreach ( $result as $key => $item ) {
+            $data[] = array (
+                'name' => $item->short_name,
+                'description' => $item->address,
+                'link' => \URL::route('company_view', $item['id']),
+
+            );
         }
 
-        return $result;
+        return $data;
+    }
+
+    public function searchOpf () {
+        $string = \Request::get('q', '');
+        $limit = \Request::get('limit', 10);
+
+        $opf = new Opf();
+
+        $result = $opf
+            ->where('full', 'like', "%$string%")
+            ->limit($limit)
+            ->get();
+
+        $data = array();
+
+        foreach ( $result as $key => $item ) {
+            $data[] = array (
+                'id'            => $item->id,
+                'name'          => $item->full,
+//                'description'   => $item->full,
+            );
+        }
+
+        return $data;
     }
 }

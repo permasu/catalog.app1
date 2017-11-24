@@ -29,6 +29,6 @@ class Opf extends Model
 
     public function company()
     {
-        return $this->belongsTo('App\Models\Company');
+        return $this->belongsTo('App\Models\Company', 'id','opf_id');
     }
 }

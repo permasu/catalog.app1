@@ -24,23 +24,33 @@ Route::get('test/id/{id}', 'ParserController@getCompany')->where('id', '\d+');
 
 //Маршрут для ajax запросов
 Route::group(['prefix'=>'ajax'], function () {
-    Route::group(['prefix'=>'address'], function() {
-       Route::get('search/{string?}/{limit?}', 'AjaxController@get_company_address_search')
-            ->name('get_ajax_address_search');
-       Route::post('search/{limit?}', 'AjaxController@post_company_address_search')
-           ->name('post_ajax_address_search');
-    });
+    Route::group(['prefix'=>'search'], function() {
 
-    Route::group(['prefix'=>'company'], function() {
-        Route::get('search/{string?}', 'AjaxController@get_company_search')
-            ->name('get_ajax_company_search');
+        Route::get('address', 'AjaxController@searchAddress')
+            ->name('ajax.search.address');
+
+        Route::get('company', 'AjaxController@searchCompany')
+            ->where('limit', '\d{1,2}')
+            ->name('ajax.search.company');
+
+        Route::get('opf', 'AjaxController@searchOpf')
+            ->where('limit', '\d{1,2}')
+            ->name('ajax.search.opf');
+
     });
 });
 
 Route::group(['prefix'=>'company'], function () {
+
     Route::get('{id}', 'CompanyController@view')
         ->where('id', '\d+')
-        ->name('company_view');
+        ->name('company.view');
+
+    Route::get('add', 'CompanyController@create')
+        ->name('company.view.create');
+
+    Route::post('add', 'CompanyController@store')
+        ->name('company.store');
 });
 
 

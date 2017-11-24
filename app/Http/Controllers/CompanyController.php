@@ -3,11 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Opf;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class CompanyController extends Controller
 {
     public function view( $id ) {
         $company = Company::whereId($id)->get()->first();
         return view('page.company', ['company' => $company]);
+    }
+
+    public function create() {
+        $opf = Opf::all('full');
+        return view('page.form.company-add', ['opf' => $opf]);
+    }
+
+    public function store(Request $request) {
+        $this->validate( $request, [
+            'short_name'    => 'required|string',
+            'full_name'     => 'nullable|string',
+            'opf_id'        => 'nullable|integer|exists:opf,id',
+            'address'       => 'nullable|string',
+            'web'           => 'nullable|string',
+            'email'         => 'required|email',
+            'description'   => 'string'
+        ]);
+
+        $company = new Company();
+
+        $company->short_name  = $request->input('short_name');
+        $company->full_name   = $request->input('full_name');
+        $company->address     = $request->input('address');
+        $company->web         = $request->input('web');
+        $company->email       = $request->input('email');
+        $company->description = $request->input('description');
+        $company->opf_id      = $request->input('opf_id');
+
+        $company->save();
+
+        return Redirect::route('company.view', $company)->with(['message' => 'Компания успешно добавлена']);
+
     }
 }

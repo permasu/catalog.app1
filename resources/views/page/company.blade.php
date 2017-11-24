@@ -4,6 +4,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            @if ( session()->has('message')  )
+                <div class="alert alert-success" role="alert">{{ session('message') }}</div>
+            @endif
             <div class="page-header">
                 <h1>{{ $company->short_name }}</h1>
             </div>
