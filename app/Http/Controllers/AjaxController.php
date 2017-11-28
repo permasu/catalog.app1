@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Opf;
 use Fomvasss\Dadata\Facades\DadataSuggest;
+use App\Classes\Parser;
 
 class AjaxController extends Controller
 {
@@ -96,5 +97,33 @@ class AjaxController extends Controller
         }
 
         return $data;
+    }
+
+    public function searchCompanyProfile() {
+        $string = \Request::get('q', '');
+        $limit = \Request::get('limit', 10);
+
+        $parser = new Parser();
+
+        $companies =  $parser->getListCompanies($string);
+        $data = array();
+
+        foreach ($companies as $company) {
+            $data[] = array(
+                'name'        => $company['name'],
+                'description' => $company['address'],
+                'id'          => $company['link']
+            );
+        }
+
+        return $data;
+    }
+
+    public function getCompany (\Request $request) {
+
+        $id = $request::get('id');
+        $parser = new Parser();
+
+        return $parser->getCompany($id);
     }
 }

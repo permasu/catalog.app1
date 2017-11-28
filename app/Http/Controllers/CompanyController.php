@@ -24,6 +24,7 @@ class CompanyController extends Controller
             'short_name'    => 'required|string',
             'full_name'     => 'nullable|string',
             'opf_id'        => 'nullable|integer|exists:opf,id',
+            'inn'           => 'nullable|integer',
             'address'       => 'nullable|string',
             'web'           => 'nullable|string',
             'email'         => 'required|email',
@@ -35,6 +36,7 @@ class CompanyController extends Controller
         $company->short_name  = $request->input('short_name');
         $company->full_name   = $request->input('full_name');
         $company->address     = $request->input('address');
+        $company->inn         = $request->input('inn');
         $company->web         = $request->input('web');
         $company->email       = $request->input('email');
         $company->description = $request->input('description');

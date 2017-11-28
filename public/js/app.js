@@ -11254,11 +11254,47 @@ Vue.component('search', __webpack_require__(40));
 var app = new Vue({
     el: '#app',
     data: {
-        value: {}
+        value: {
+            name: '',
+            full_name: '',
+            address: '',
+            inn: '',
+            opf: '',
+            opf_id: '',
+            web: '',
+            email: '',
+            description: ''
+        }
+    },
+
+    created: function created() {
+        if (typeof data !== "undefined") {
+            this.value = Object.assign(this.value, data);
+            console.log(data);
+            console.log(this.value);
+        }
     },
     methods: {
         setValue: function setValue(param) {
             this.$set(this.value, param.name, param.id);
+        },
+
+        getCompany: function getCompany(param) {
+            axios.get('/ajax/get/company', {
+                params: {
+                    id: param.id
+                }
+            }).then(this.company).catch(function (error) {
+                console.log(error);
+            });
+        },
+
+        company: function company(_company) {
+            this.value.name = _company.data.name;
+            this.value.full_name = _company.data.full_name;
+            this.value.inn = _company.data.inn;
+            this.value.address = _company.data.postal + ', ' + _company.data.region + ', ' + _company.data.locality + ', ' + _company.data.street;
+            this.$refs.search.$refs.autocomplete.setValue(this.value.address);
         }
     }
 });
@@ -43476,6 +43512,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -43496,6 +43533,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     this.$emit('update-value', {
                         'id': value.id,
                         'name': this.target
+                    });
+                    break;
+                case 'getCompany':
+                    this.$emit('get-company', {
+                        'id': value.id
                     });
                     break;
             }
@@ -44280,6 +44322,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("autocomplete", {
+    ref: "autocomplete",
     attrs: {
       anchor: "name",
       label: "description",

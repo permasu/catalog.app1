@@ -37,7 +37,16 @@ Route::group(['prefix'=>'ajax'], function () {
             ->where('limit', '\d{1,2}')
             ->name('ajax.search.opf');
 
+        Route::get('company_profile', 'AjaxController@searchCompanyProfile')
+            ->name('ajax.search.company_profile');
+
     });
+
+    Route::group(['prefix'=>'get'], function () {
+        Route::get('company', 'AjaxController@getCompany')
+            ->name('ajax.get.company');
+    });
+
 });
 
 Route::group(['prefix'=>'company'], function () {
@@ -47,7 +56,7 @@ Route::group(['prefix'=>'company'], function () {
         ->name('company.view');
 
     Route::get('add', 'CompanyController@create')
-        ->name('company.view.create');
+        ->name('company.create');
 
     Route::post('add', 'CompanyController@store')
         ->name('company.store');

@@ -29,6 +29,7 @@ class Parser {
             ),
             'company' => array (
                 'name'      => '//*[@itemprop="name"]',
+                'full_name' => '//*[@itemprop="legalName"]',
                 'inn'       => '//*[@itemprop="taxID"]',
                 'postal'    => '//*[@itemprop="postalCode"]',
                 'region'    => '//*[@itemprop="addressRegion"]',
@@ -101,7 +102,8 @@ class Parser {
             if ( $key == 'element') continue;
 
             if ( strpos('link', $key) !== false ) {
-                $data[$key] = $crawler->filterXpath($path)->attr('href');
+                $id = $crawler->filterXpath($path)->evaluate('substring-after(@href, "/id/")');
+                $data[$key] = $id[0];
             } else {
                 $data[$key] = trim( $crawler->filterXpath($path)->text() );
             }

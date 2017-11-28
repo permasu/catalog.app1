@@ -3,6 +3,7 @@
 
             anchor       = "name"
             label        = "description"
+            ref          = "autocomplete"
             :initValue   = "value"
             :url         = "url"
             :name        = "name"
@@ -40,6 +41,11 @@
                         this.$emit('update-value', {
                             'id': value.id,
                             'name': this.target
+                        });
+                        break;
+                    case 'getCompany':
+                        this.$emit('get-company', {
+                            'id': value.id
                         });
                         break;
                 }
