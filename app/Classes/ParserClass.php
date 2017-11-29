@@ -1,8 +1,7 @@
 <?php
-
 namespace App\Classes;
 
-use Goutte;
+use Goutte\Client;
 
 class Parser {
 
@@ -53,7 +52,7 @@ class Parser {
         }
 
         $attributes = $this->attributes['list'];
-        $html = Goutte::request('get', $this->link . '/search?query=' . $string);
+        $html = (new Client)->request('get', $this->link . '/search?query=' . $string);
         $companies = array();
 
         $list = $html->filterXpath($attributes['element']);
@@ -78,7 +77,7 @@ class Parser {
             return 'false';
         }
 
-        $html = Goutte::request('get', $this->link . '/id/' . $id);
+        $html = (new Client)->request('get', $this->link . '/id/' . $id);
         $attributes = $this->attributes['company'];
 
         $company = $this->eachAttributes($html, $attributes);

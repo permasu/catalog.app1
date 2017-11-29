@@ -177,10 +177,6 @@ return [
          */
         Fomvasss\Dadata\DadataServiceProvider::class,
         /*
-        * Goutte Service Provide
-        */
-        App\Providers\GoutteServiceProvider::class,
-        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
