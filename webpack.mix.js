@@ -13,5 +13,15 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
     .js('resources/assets/js/admin/app.js', 'public/js/admin/app.js')
-   .sass('resources/assets/sass/app.scss', 'public/css')
-   .sass('resources/assets/sass/admin.scss', 'public/css');
+    .sass('resources/assets/sass/app.scss', 'public/css/style.css');
+   // .sass('resources/assets/sass/admin.scss', 'public/css');
+
+mix.less('resources/assets/less/common.less', 'public/css/vendor/admin-lte.css')
+    .options({
+        processCssUrls: false
+    });
+
+mix.styles([
+    'public/css/vendor/admin-lte.css',
+    'public/css/style.css',
+],  'public/css/app.css');

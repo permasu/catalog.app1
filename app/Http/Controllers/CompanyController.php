@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class CompanyController extends Controller
 {
-    public function view( $id ) {
+    public function viewCompany( $id ) {
         $company = Company::whereId($id)->get()->first();
         return view('page.company', ['company' => $company]);
     }
@@ -17,6 +17,11 @@ class CompanyController extends Controller
     public function create() {
         $opf = Opf::all('full');
         return view('page.form.company-add', ['opf' => $opf]);
+    }
+
+    public function viewAll() {
+        $companies = Company::all();
+        return view('page.company-table', ['companies' => $companies]);
     }
 
     public function store(Request $request) {

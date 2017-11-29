@@ -1,5 +1,10 @@
 @import "variables";
 
+a {
+  text-decoration: none;
+  background-color: transparent;
+}
+
 .autocomplete-list {
   &>ul {
     padding: 0;

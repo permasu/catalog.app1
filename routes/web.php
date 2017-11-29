@@ -51,9 +51,12 @@ Route::group(['prefix'=>'ajax'], function () {
 
 Route::group(['prefix'=>'company'], function () {
 
-    Route::get('{id}', 'CompanyController@view')
+    Route::get('{id}', 'CompanyController@viewCompany')
         ->where('id', '\d+')
         ->name('company.view');
+
+    Route::get('', 'CompanyController@viewAll')
+        ->name('companies.view');
 
     Route::get('add', 'CompanyController@create')
         ->name('company.create');
@@ -62,6 +65,14 @@ Route::group(['prefix'=>'company'], function () {
         ->name('company.store');
 });
 
+//TODO: Убрать перед публикацией
+Route::get('/clear', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+    return "Кэш очищен.";
+});
 
 Auth::routes();
 

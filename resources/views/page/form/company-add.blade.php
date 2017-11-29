@@ -2,16 +2,27 @@
 
 
 @section('content')
-    <div class="container">
+    <section class="content-header">
+        <h1>
+            Добавление организации
+        </h1>
+    </section>
+    <section class="content">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="panel panel-danger panel-collapse">
-                    <div class="panel-heading">
-                        Автозаполнение
+            <div class="col-md-5 col-md-push-7">
+                <div class="box box-danger">
+                    <div class="box-header">
+                        <div class="box-title">
+                            Автозаполнение
+                        </div>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div class="panel-body">
+                    <div class="box-body">
                         Вы можете заполнить часть данных вашей организации автоматически, воспользовавашись поиском ниже.
-                        {{--Форма поиска организации на руспрофайл--}}
                         <search
                                 name="company"
                                 url="/ajax/search/company_profile"
@@ -21,12 +32,34 @@
                         >
                         </search>
                     </div>
-
                 </div>
+
+                @if (count($errors) > 0)
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="box-title">
+                                Исправьте ошибки!
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                @endif
+
             </div>
-            <div class="col-md-6 col-md-offset-3">
-                <div class="panel panel-primary">
-                    <div class="panel-body">
+            <div class="col-md-7 col-md-pull-5">
+                <div class="box box-default">
+                    <div class="box-header">
+                        <div class="box-title">
+                            Заполните форму
+                        </div>
+                    </div>
+                    <div class="box-body">
                         <form action="" method="post" role="form" class="form form-default">
                             <legend>Добавление организации в справочник</legend>
                             {{ csrf_field() }}
@@ -103,20 +136,9 @@
                         </form>
                     </div>
                 </div>
-
-
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
             </div>
         </div>
-    </div>
+    </section>
 @endsection
 
 @push('footer-scripts')

@@ -10,9 +10,8 @@ window._ = require('lodash');
 try {
     window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap-sass');
+    require('bootstrap');
     require('jquery-ui');
-    // require('./components/autocomplete');
 
 } catch (e) {}
 
@@ -39,6 +38,16 @@ if (token) {
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
+
+
+/**
+ * Best open source admin dashboard & control panel theme.
+ * Built on top of Bootstrap 3, AdminLTE provides a range of
+ * responsive, reusable, and commonly used components.
+ *
+ * @see https://almsaeedstudio.com/preview
+ */
+require('admin-lte');
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

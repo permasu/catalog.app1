@@ -67,8 +67,7 @@ class AjaxController extends Controller
             $data[] = array (
                 'name' => $item->short_name,
                 'description' => $item->address,
-                'link' => \URL::route('company_view', $item['id']),
-
+                'link' => \URL::route('company.view', $item['id']),
             );
         }
 
