@@ -61,13 +61,18 @@ class AjaxController extends Controller
             ->limit($limit)
             ->get();
 
+        if ( $result->count() == 0 ) {
+            return [];
+        }
+
         $data = array();
 
         foreach ( $result as $key => $item ) {
             $data[] = array (
-                'name' => $item->short_name,
+                'name'        => $item->short_name,
                 'description' => $item->address,
-                'link' => \URL::route('company.view', $item['id']),
+                'link'        => \URL::route('company.view', $item['id']),
+                'query'       => $string,
             );
         }
 
@@ -98,6 +103,12 @@ class AjaxController extends Controller
         return $data;
     }
 
+     /**
+     * Возвращает список компаний найденных парсером
+     *
+     * @return array
+     * */
+
     public function searchCompanyProfile() {
         $string = \Request::get('q', '');
         $limit = \Request::get('limit', 10);
@@ -105,20 +116,37 @@ class AjaxController extends Controller
         $parser = new Parser();
 
         $companies =  $parser->getListCompanies($string);
+
+        if ( count($companies) == 0 ) {
+            return [];
+        }
+
         $data = array();
 
         foreach ($companies as $company) {
             $data[] = array(
                 'name'        => $company['name'],
-                'description' => $company['address'],
-                'id'          => $company['link']
+                'description' => (key_exists('address', $company)) ? $company['address']: '',
+                'id'          => $company['link'],
+                'query'       => $string
             );
         }
 
         return $data;
     }
 
+    /**
+     * Получить данные компании по ид
+     *
+     * @param $request \Request
+     * @return array
+     * */
+
     public function getCompany (\Request $request) {
+
+        if ( !$request::has('id') ) {
+            return [];
+        }
 
         $id = $request::get('id');
         $parser = new Parser();

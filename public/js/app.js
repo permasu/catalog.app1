@@ -43625,21 +43625,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         myRender: function myRender(value) {
-            var html;
+            var html = void 0;
+            var pattern = void 0;
+            var query = void 0;
+
+            query = value.query.split(/[^а-яa-z]+/gi).join("\|");
+            pattern = new RegExp('(' + query + ')', 'gui');
 
             switch (this.render) {
                 case 'address':
-
-                    var string = value.query.split(/[^а-яa-z]+/gi).join("\|");
-
-                    var pattern = new RegExp('(' + string + ')', 'gui');
-
-                    string = value.name.replace(pattern, '<b>$1</b>');
-
-                    html = '<span class="autocomplete-anchor-text">' + string + '</span>';
+                    html = '<span class="autocomplete-anchor-text">' + value.name.replace(pattern, '<b>$1</b>') + '</span>';
                     break;
                 default:
-                    html = '<span class="autocomplete-anchor-text">' + value.name + '</span>\n                           <span class="autocomplete-anchor-label">' + value.description + '</span>';
+                    html = '<span class="autocomplete-anchor-text">' + value.name.replace(pattern, '<b>$1</b>') + '</span>';
+                    if (value.description !== "") {
+                        html += '<span class="autocomplete-anchor-label">' + value.description.replace(pattern, '<b>$1</b>') + '</span>';
+                    }
                     break;
             }
 

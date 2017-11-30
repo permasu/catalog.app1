@@ -69,21 +69,17 @@ class Parser {
      * Данные компании по ссылке
      *
      * @param integer $id
-     * @return array|boolean
+     * @return array
      * */
 
     public function getCompany( $id ) {
-        if ( $id === false ) {
-            return 'false';
-        }
 
         $html = (new Client)->request('get', $this->link . '/id/' . $id);
-        $attributes = $this->attributes['company'];
 
+        $attributes = $this->attributes['company'];
         $company = $this->eachAttributes($html, $attributes);
 
-        return count($company) > 0 ? $company : false;
-
+        return count($company) > 0 ? $company : [];
     }
 
     /**
@@ -102,9 +98,16 @@ class Parser {
 
             if ( strpos('link', $key) !== false ) {
                 $id = $crawler->filterXpath($path)->evaluate('substring-after(@href, "/id/")');
+
+                if ( $id[0] === "") {
+                    $id = $crawler->filterXpath($path)->evaluate('substring-after(@href, "/ip/")');
+                }
+
                 $data[$key] = $id[0];
             } else {
-                $data[$key] = trim( $crawler->filterXpath($path)->text() );
+                if ( $crawler->filterXpath($path)->count() > 0 ){
+                    $data[$key] = trim( $crawler->filterXpath($path)->text() );
+                }
             }
         };
 
