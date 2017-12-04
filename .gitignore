@@ -16,3 +16,9 @@ composer.lock
 composer.phar
 
 public/packages/
+
+resources/assets/fonts/
+
+public/css/style\.css
+
+public/css/vendor/admin-lte\.css

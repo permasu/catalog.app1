@@ -34,9 +34,9 @@ AdminSection::registerModel(Company::class, function (ModelConfiguration $model)
                             AdminFormElement::text('short_name', 'Название')->required(),
                             AdminFormElement::text('full_name', 'Название')->required(),
                             AdminFormElement::select('opf_id', 'Тип организации')->setModelForOptions(new Opf())->setDisplay('full'),
-                            AdminFormElement::textarea('description', 'Описание')->setRows(2)
+                            AdminFormElement::text('inn', 'ИНН'),
                         ];
-                    })
+                    }, 6)
                     ->addColumn(function(){
                         return [
                             AdminFormElement::text('web', 'Сайт'),
@@ -45,7 +45,12 @@ AdminSection::registerModel(Company::class, function (ModelConfiguration $model)
                                 ->setHtmlAttribute('id', 'address')
                                 ->withPackage('autocomplete')
                         ];
-                    })
+                    }, 6)
+                    ->addColumn(function() {
+                        return [
+                            AdminFormElement::textarea( 'description', 'Описание')->setRows(2)
+                        ];
+                    }, 12)
             );
 
             $tabs[] = AdminDisplay::tab($form)->setLabel('Основные сведения')->setActive(true);
