@@ -125,9 +125,9 @@ class AjaxController extends Controller
 
         foreach ($companies as $company) {
             $data[] = array(
-                'name'        => $company['name'],
+                'name'        => (key_exists('name', $company)) ? $company['name']: '',
                 'description' => (key_exists('address', $company)) ? $company['address']: '',
-                'id'          => $company['link'],
+                'id'          => (key_exists('id', $company)) ? $company['link'] : '',
                 'query'       => $string
             );
         }

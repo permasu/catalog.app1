@@ -58,7 +58,7 @@ class Parser {
         $list = $html->filterXpath($attributes['element']);
 
         for ( $i = 0; $i < $list->count(); $i ++ ) {
-            $companies[] = $this->eachAttributes( $list->eq($i), $attributes);
+            $companies[] = $this->eachAttributes( $list->eq($i), $attributes, ['element']);
         };
 
         return $companies;
@@ -74,7 +74,7 @@ class Parser {
 
     public function getCompany( $id ) {
 
-        $html = (new Client)->request('get', $this->link . '/id/' . $id);
+        $html = (new Client)->request('get', $this->link . $id);
 
         $attributes = $this->attributes['company'];
         $company = $this->eachAttributes($html, $attributes);
@@ -87,27 +87,21 @@ class Parser {
      *
      * @param \Symfony\Component\DomCrawler\Crawler $crawler;
      * @param array $attributes
+     * @param array $exclude (default: []) Список игнорируемых эллементов
      *
      * @return array
      * */
 
-    private function eachAttributes ( $crawler, $attributes) {
+    private function eachAttributes ( $crawler, $attributes, $exclude = []) {
         $data = array();
+
+        if ( count($exclude) > 0 ) {
+            $attributes = array_diff_key( $attributes, array_flip( $exclude ) );
+        };
+
         foreach ( $attributes as $key => $path ) {
-            if ( $key == 'element') continue;
-
-            if ( strpos('link', $key) !== false ) {
-                $id = $crawler->filterXpath($path)->evaluate('substring-after(@href, "/id/")');
-
-                if ( $id[0] === "") {
-                    $id = $crawler->filterXpath($path)->evaluate('substring-after(@href, "/ip/")');
-                }
-
-                $data[$key] = $id[0];
-            } else {
-                if ( $crawler->filterXpath($path)->count() > 0 ){
-                    $data[$key] = trim( $crawler->filterXpath($path)->text() );
-                }
+            if ( $crawler->filterXpath($path)->count() > 0 ){
+                $data[$key] = trim( $crawler->filterXpath($path)->text() );
             }
         };
 
