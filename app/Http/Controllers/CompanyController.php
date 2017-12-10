@@ -48,8 +48,18 @@ class CompanyController extends Controller
         $company->opf_id      = $request->input('opf_id');
 
         $company->save();
+        /*
+         * $phone = new Phone(['type']=>'value', ['number']=>'value').
+$company = new Company()
+$company->phone->save($phone)
+Ошибся: $company->phone()->save($phone)
+         */
 
         return Redirect::route('company.view', $company)->with(['message' => 'Компания успешно добавлена']);
+
+    }
+    public function test_add(){
+       // var_dump($request->all());die;
 
     }
 }

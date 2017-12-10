@@ -30,4 +30,9 @@ class Phone extends Model
     public function company () {
         return $this->belongsTo('App\Models\Company');
     }
+    protected $fillable=[
+      'company_id',
+        'number',
+        'type'
+    ];
 }

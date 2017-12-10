@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Route::get('test/{string}', 'ParserController@getList');
 Route::get('test/id/{id}', 'ParserController@getCompany')->where('id', '\d+');
+Route::get('/test_add', 'CompanyController@test_add');
 
 
 //Маршрут для ajax запросов
