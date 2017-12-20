@@ -18,11 +18,12 @@
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "lodash": "^4.17.4",
-    "vue": "^2.1.10"
+    "vue": "^2.5.13"
   },
   "dependencies": {
     "admin-lte": "^2.4.2",
     "axios": "^0.16.2",
+    "vue-autocomplete": "0.0.2",
     "vue-axios": "^2.0.2",
     "vue2-autocomplete-js": "^0.2.2"
   }

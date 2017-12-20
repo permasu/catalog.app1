@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="box-body">
-                        <form action="" method="post" role="form" class="form form-default">
+                        <form action="/company/add" method="post" role="form" class="form form-default">
                             <legend>Добавление организации в справочник</legend>
                             {{ csrf_field() }}
                             <div class="form-group">
@@ -139,9 +139,9 @@
                                     <ul id="example-1">
                                         <li v-for="item in items">
                                             <ul>
-                                                <li>{{ item.weight }}</li>
-                                                <li>{{ item.volume }}</li>
-                                                <li>{{ item.cost }}</li>
+                                                <li>@{{ item.weight }}</li>
+                                                <li>@{{ item.volume }}</li>
+                                                <li>@{{ item.cost }}</li>
                                             </ul>
                                         </li>
                                     </ul>
