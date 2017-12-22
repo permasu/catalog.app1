@@ -14,6 +14,7 @@ class PhoneController extends Controller
     public function index()
     {
         //
+        Phone::all();
     }
 
     /**

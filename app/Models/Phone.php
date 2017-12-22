@@ -27,12 +27,16 @@ use Illuminate\Database\Eloquent\Model;
 class Phone extends Model
 {
     //
-    public function company () {
-        return $this->belongsTo('App\Models\Company');
+    public function company()
+    {
+        return $this->belongsTo('App\Models\Company', 'company_id');
     }
-    protected $fillable=[
-      'company_id',
+
+    protected $fillable = [
+        'company_id',
         'number',
         'type'
     ];
+
+
 }

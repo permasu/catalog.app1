@@ -22,7 +22,8 @@
                         </div>
                     </div>
                     <div class="box-body">
-                        Вы можете заполнить часть данных вашей организации автоматически, воспользовавашись поиском ниже.
+                        Вы можете заполнить часть данных вашей организации автоматически, воспользовавашись поиском
+                        ниже.
                         <search
                                 name="company"
                                 url="/ajax/search/company_profile"
@@ -151,20 +152,19 @@
                                 </div>
 
 
-
                             </div>
                             <script>
                                 var root = new Vue({
                                     el: '#root',
                                     data: {
                                         items: [
-                                            { weight: 100.0, volume: 0.01, cost: 45 },
-                                            { weight: 200.0, volume: 0.02, cost: 66 }
+                                            {weight: 100.0, volume: 0.01, cost: 45},
+                                            {weight: 200.0, volume: 0.02, cost: 66}
                                         ]
                                     },
                                     methods: {
-                                        addItem : function() {
-                                            this.items.push({weight:300.0,volume:0.06,cost:30});
+                                        addItem: function () {
+                                            this.items.push({weight: 300.0, volume: 0.06, cost: 30});
                                         }
                                     }
 
@@ -175,15 +175,15 @@
                             <!-- -->
 
                             <label for="description">Краткое описание</label>
-                            <textarea name="description" rows="3" class="form-control" v-model="value.description"></textarea>
+                            <textarea name="description" rows="3" class="form-control"
+                                      v-model="value.description"></textarea>
 
+
+                            <input type="submit" class="btn btn-primary">Submit</input>
+                        </form>
                     </div>
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
                 </div>
             </div>
-        </div>
         </div>
     </section>
 @endsection

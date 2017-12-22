@@ -47,7 +47,7 @@ class Company extends Model
     }
 
     public function phones () {
-        return $this->hasMany('App\Models\Phone');
+        return $this->hasMany('App\Models\Phone', 'company_id');
     }
 
     public function categories () {

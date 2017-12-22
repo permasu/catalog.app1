@@ -21,6 +21,13 @@ class CompanyController extends Controller
 
     public function viewAll() {
         $companies = Company::all();
+
+     $phones=\App\Models\Company::find(1)->phones;
+     foreach ($phones as $phone ) {
+         echo $phone->number;
+         echo '<br>';
+     }
+
         return view('page.company-table', ['companies' => $companies]);
     }
 
@@ -36,12 +43,13 @@ class CompanyController extends Controller
             'description'   => 'string'
         ]);
 
+
         $company = new Company();
 
         $company->short_name  = $request->input('short_name');
         $company->full_name   = $request->input('full_name');
         $company->address     = $request->input('address');
-        $company->inn         = $request->input('inn');
+        $company->inn         = (int) $request->input('inn');
         $company->web         = $request->input('web');
         $company->email       = $request->input('email');
         $company->description = $request->input('description');
