@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Company;
 
 class PhoneController extends Controller
 {
@@ -14,7 +15,10 @@ class PhoneController extends Controller
     public function index()
     {
         //
-        Phone::all();
+      // $data= Company::find(1);
+
+
+
     }
 
     /**
@@ -25,6 +29,7 @@ class PhoneController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -46,7 +51,12 @@ class PhoneController extends Controller
      */
     public function show($id)
     {
-        //
+
+        $data=  Company::find($id)->phones;
+//        dd($data);
+
+         return $data;
+
     }
 
     /**

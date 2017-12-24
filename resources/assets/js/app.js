@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -17,13 +16,13 @@ window.Vue = require('vue');
  */
 
 Vue.component('search', require('./components/autocomplete.vue'));
-Vue.component('phone',require('./components/phone.vue'));
+Vue.component('phone', require('./components/phone.vue'));
 const app = new Vue({
     el: '#app',
     data: {
-        value : {
-            name : '',
-            full_name : '',
+        value: {
+            name: '',
+            full_name: '',
             address: '',
             inn: '',
             opf: '',
@@ -35,30 +34,30 @@ const app = new Vue({
     },
 
     created: function () {
-        if ( typeof data !== "undefined" ) {
+        if (typeof data !== "undefined") {
             this.value = Object.assign(this.value, data);
             console.log(data);
             console.log(this.value);
         }
     },
     methods: {
-        setValue: function ( param ) {
-            this.$set( this.value , param.name, param.id)
+        setValue: function (param) {
+            this.$set(this.value, param.name, param.id)
         },
 
-        getCompany: function ( param ) {
+        getCompany: function (param) {
             axios.get('/ajax/get/company', {
                 params: {
                     id: param.id
                 }
             })
-              .then( this.company )
-              .catch(function (error) {
+                .then(this.company)
+                .catch(function (error) {
                     console.log(error);
                 });
         },
 
-        company: function ( company ) {
+        company: function (company) {
             this.value.name = company.data.name;
             this.value.full_name = company.data.full_name;
             this.value.inn = company.data.inn;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Opf;
+use App\Models\Phone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -22,16 +23,17 @@ class CompanyController extends Controller
     public function viewAll() {
         $companies = Company::all();
 
-     $phones=\App\Models\Company::find(1)->phones;
-     foreach ($phones as $phone ) {
-         echo $phone->number;
-         echo '<br>';
-     }
-
-        return view('page.company-table', ['companies' => $companies]);
+         return view('page.company-table', ['companies' => $companies]);
     }
 
     public function store(Request $request) {
+       // dd($request->all());
+
+
+
+
+
+
         $this->validate( $request, [
             'short_name'    => 'required|string',
             'full_name'     => 'nullable|string',
@@ -56,6 +58,9 @@ class CompanyController extends Controller
         $company->opf_id      = $request->input('opf_id');
 
         $company->save();
+        $phonearr  =   $request->input('phone');
+        foreach ($phonearr as $phone)  { $company->phones()->create($phone);}
+
         /*
          * $phone = new Phone(['type']=>'value', ['number']=>'value').
 $company = new Company()

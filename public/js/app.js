@@ -11340,7 +11340,6 @@ module.exports = __webpack_require__(67);
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -45174,46 +45173,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['phone'],
+    mounted: function mounted() {
+        var _this = this;
+
+        if (company_id > 0) {
+            axios.get('/phone/' + this.company_id).then(function (response) {
+                _this.phones = response.data;
+            }).catch(function (error) {
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                    // http.ClientRequest in node.js
+                    console.log(error.request);
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+        }
+    },
+
+
+    props: ['company_id'],
     data: function data() {
         return {
-            phones: [{ type: '', number: '' }]
-        };
-    },
-    methods: {
-        addphone: function addphone(event) {
-            event.preventDefault();
-            this.phones.push({
+            phones: [{
                 type: '',
                 number: ''
+            }]
+        };
+    },
+
+    methods: {
+
+        addphone: function addphone(event) {
+            event.preventDefault();
+            console.log(this.company_id);
+            this.phones.push({
+                type: '',
+                number: '',
+                id: ''
             });
 
             this.$nextTick(function () {
@@ -45240,56 +45248,8 @@ var render = function() {
       "div",
       { staticClass: "row" },
       _vm._l(_vm.phones, function(phone, index) {
-        return _c("div", { staticClass: "input-group mb-5" }, [
-          _c("div", { staticClass: "col-sm-3" }, [
-            _c("div", { staticClass: "input-group" }, [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: phone.type,
-                      expression: "phone.type"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { id: "selecttype", name: "phone.type" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.$set(
-                        phone,
-                        "type",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      )
-                    }
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "M" } }, [
-                    _vm._v("Мобильный")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "F" } }, [_vm._v("Факс")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "O" } }, [_vm._v("Другой")])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-sm-5" }, [
+        return _c("div", [
+          _c("div", { staticClass: "col-sm-10" }, [
             _c("div", { staticClass: "input-group" }, [
               _c("input", {
                 directives: [
@@ -45300,12 +45260,12 @@ var render = function() {
                     expression: "phone.number"
                   }
                 ],
-                staticClass: "form-control",
                 attrs: {
-                  type: "tel",
-                  name: "phonenumber",
-                  placeholder: "Номер телефона:",
-                  id: "number"
+                  type: "text",
+                  name: "phone[" + index + "][number]",
+                  "data-inputmask":
+                    " 'mask':['+7 (999) 999-99-99]', '+7 (34299) 9-99-99'",
+                  "data-mask": ""
                 },
                 domProps: { value: phone.number },
                 on: {
@@ -45320,7 +45280,28 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-sm-2" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: phone.id,
+                expression: "phone.id"
+              }
+            ],
+            attrs: { type: "hidden", name: "id" },
+            domProps: { value: phone.id },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(phone, "id", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-1" }, [
             _c("div", { staticClass: "input-group" }, [
               _c(
                 "button",
@@ -45329,12 +45310,12 @@ var render = function() {
                   attrs: { type: "button" },
                   on: { click: _vm.addphone }
                 },
-                [_vm._v("\r\n                    Добавить\r\n                ")]
+                [_vm._v("\n                        +\n                    ")]
               )
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-sm-2 " }, [
+          _c("div", { staticClass: "col-sm-1 " }, [
             _c("div", { staticClass: "input-group" }, [
               _c(
                 "button",
@@ -45347,7 +45328,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("\r\n                    Удалить\r\n                ")]
+                [_vm._v("\n                        -\n                    ")]
               )
             ])
           ])

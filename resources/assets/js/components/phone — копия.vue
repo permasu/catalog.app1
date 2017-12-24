@@ -3,10 +3,10 @@
         <!--
         <div class="container">
             -->
-        <div class="row">
+        <div class="row form-phones">
 
             <div
-
+                    class="form-phones-item"
                     v-for="(phone, index) in phones"
             >
 
@@ -15,7 +15,7 @@
                         <input
                                 type="text"
                                 :name="'phone['+ index +'][number]'"
-
+                                class="form-control"
                                 v-model="phone.number"
                                 data-inputmask=" 'mask':['+7 (999) 999-99-99]', '+7 (34299) 9-99-99'"
                                 data-mask="">
@@ -59,30 +59,28 @@
 <script>
     export default {
         mounted() {
-            if (company_id>0) {
-                axios.get('/phone/' + this.company_id)
-                    .then(response => {
-                        this.phones = response.data;
-                    })
-                    .catch(function (error) {
-                        if (error.response) {
-                            // The request was made and the server responded with a status code
-                            // that falls out of the range of 2xx
-                            console.log(error.response.data);
-                            console.log(error.response.status);
-                            console.log(error.response.headers);
-                        } else if (error.request) {
-                            // The request was made but no response was received
-                            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                            // http.ClientRequest in node.js
-                            console.log(error.request);
-                        } else {
-                            // Something happened in setting up the request that triggered an Error
-                            console.log('Error', error.message);
-                        }
-                        console.log(error.config);
-                    });
-            }
+            axios.get('/phone/' + this.company_id)
+                .then(response => {
+                    this.phones = response.data;
+                })
+                .catch(function (error) {
+                    if (error.response) {
+                        // The request was made and the server responded with a status code
+                        // that falls out of the range of 2xx
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                        // The request was made but no response was received
+                        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                        // http.ClientRequest in node.js
+                        console.log(error.request);
+                    } else {
+                        // Something happened in setting up the request that triggered an Error
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                });
         },
 
         props: ['company_id'],

@@ -116,9 +116,9 @@
                                         v-model="value.address"
                                 ></search>
                                 <label for="phone">Телефон</label>
-
                                 <phone
                                         name="phone"
+
                                 ></phone>
 
                                 <label for="web">Сайт</label>
@@ -133,6 +133,8 @@
                                     <input type="text" name="email" class="form-control" v-model="value.email">
                                 </div>
                                 <!-- -->
+
+
 
                                 <script src={{ asset('js/vue.js') }}></script>
 
@@ -179,12 +181,13 @@
                                       v-model="value.description"></textarea>
 
 
-                            <input type="submit" class="btn btn-primary">Submit</input>
+                            <button type="submit" class="btn btn-primary">Submit</button>>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+
     </section>
 @endsection
 
